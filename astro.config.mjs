@@ -4,8 +4,8 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 
-// https://astro.build/config
 export default defineConfig({
-  site: "https://astroship.web3templates.com",
+  site: "https://xavieryuhanliu.github.io",
+  base: "/music-visualizations",
   integrations: [tailwind(), mdx(), sitemap(), icon()],
 });
