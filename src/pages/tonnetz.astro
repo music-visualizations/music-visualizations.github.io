@@ -4,7 +4,7 @@ import Container from "@components/container.astro";
 import { Icon } from "astro-icon/components";
 
 // Update the Tonnetz grid
-const rows = 10;
+const rows = 8;
 const cols = 26; // Doubled from 13 to 26
 const notes = [
   ["E♭", "B♭", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯"],
@@ -28,7 +28,7 @@ const triangleHeight = Math.sqrt(3) / 2 * triangleSize;
 
 // Update SVG dimensions and viewBox
 const svgWidth = cols * 1.5 * triangleSize;
-const svgHeight = rows * triangleHeight;
+const svgHeight = rows * triangleHeight - 30;
 const horizontalShift = triangleSize * 0.75;
 
 // Calculate the visible area
@@ -53,7 +53,7 @@ const instruments = ["piano", "guitar", "synth", "violin"];
     
     <div class="flex justify-center items-start space-x-8">
       <div class="w-2/3 border border-gray-300 rounded-lg overflow-hidden">
-        <svg width={svgWidth} height={svgHeight} viewBox={`${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio="xMidYMid meet">
+        <svg id="tonnetzSvg" width={svgWidth} height={svgHeight} viewBox={`${viewBoxX} ${viewBoxY} ${viewBoxWidth} ${viewBoxHeight}`} preserveAspectRatio="xMidYMid meet">
           {/* Draw all triangles */}
           {notes.map((row, i) => 
             row.map((_, j) => (
@@ -172,19 +172,13 @@ const instruments = ["piano", "guitar", "synth", "violin"];
   window.stopNote = (note) => {
     if (activeOscillators[note]) {
       const { oscillator, gainNode } = activeOscillators[note];
-      const duration = parseFloat(document.getElementById('duration').value);
 
-      // Fade out the note
-      gainNode.gain.setValueAtTime(gainNode.gain.value, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
 
       // Stop the oscillator after the fade-out
-      oscillator.stop(audioContext.currentTime + duration);
+      oscillator.stop();
 
       // Remove the oscillator from active oscillators after it's stopped
-      setTimeout(() => {
-        delete activeOscillators[note];
-      }, duration * 1000);
+      delete activeOscillators[note];
 
       // Remove highlight from nodes
       const nodes = document.querySelectorAll(`circle[data-note="${note}"]`);
@@ -299,4 +293,5 @@ const instruments = ["piano", "guitar", "synth", "violin"];
       stopNote(keyboardMap[key]);
     }
   });
+
 </script>
