@@ -4,28 +4,73 @@ import { Picture } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
 import Sectionhead from "@components/sectionhead.astro";
+import { getLocale } from "astro-i18n-aut";
+
+const locale = getLocale(Astro.url);
 
 // Filter team entries with 'draft: false' & date before current date
 const publishedTeamMembers = await getCollection("team", ({ data }) => {
-  return !data.draft && data.publishDate < new Date();
+    return !data.draft && data.publishDate < new Date();
 });
+
+let about_title: string;
+let about_desc: string;
+let about_heading: string;
+let about_paragraph: string;
+
+switch (locale) {
+  case "zh":
+    about_title = "关于";
+    about_desc = "这是一个开源的音乐可视化项目，使用astro开发，由刘宇涵发起";
+    about_heading = "用可视化理解音乐世界的美妙";
+    about_paragraph = "欢迎加入我们的GitHub开源项目，无论是提出issue还是共贡献代码，也欢迎各位进行捐赠";
+    break;
+  case "ja":
+    about_title = "について";
+    about_desc = "これはastroで開発されたオープンソースの音楽可視化プロジェクトで、劉宇涵によって開始されました";
+    about_heading = "可視化を通じて音楽の世界を理解する";
+    about_paragraph = "GitHubのオープンソースプロジェクトに参加することを歓迎します。issueの提出やコードの貢献、寄付も歓迎します";
+    break;
+  case "de":
+    about_title = "Über";
+    about_desc = "Dies ist ein Open-Source-Musikvisualisierungsprojekt, das mit Astro entwickelt wurde und von Yuhan 'Helios' Liu initiiert wurde";
+    about_heading = "Verstehen Sie die Schönheit der Musikwelt durch Visualisierung";
+    about_paragraph = "Wir laden Sie ein, an unserem Open-Source-Projekt auf GitHub teilzunehmen, sei es durch das Einreichen von Issues oder das Beitragen von Code. Spenden sind ebenfalls willkommen";
+    break;
+  case "fr":
+    about_title = "À propos";
+    about_desc = "Il s'agit d'un projet de visualisation musicale open-source développé avec Astro, initié par Yuhan ‘Helios’ Liu";
+    about_heading = "Comprendre la beauté du monde de la musique grâce à la visualisation";
+    about_paragraph = "Nous vous invitons à rejoindre notre projet open-source sur GitHub, que ce soit en soumettant des issues ou en contribuant au code. Les dons sont également les bienvenus";
+    break;
+  case "ru":
+    about_title = "О нас";
+    about_desc = "Это проект с открытым исходным кодом для визуализации музыки, разработанный с использованием Astro, инициированный Юханом Лю";
+    about_heading = "Понимание красоты музыкального мира через визуализацию";
+    about_paragraph = "Мы приглашаем вас присоединиться к нашему проекту с открытым исходным кодом на GitHub, будь то отправка issues или вклад в код. Пожертвования также приветствуются";
+    break;
+  default:
+    about_title = "About";
+    about_desc = "This is an open-source music visualization project developed with Astro, initiated by Yuhan 'Helios' Liu";
+    about_heading = "Understanding the beauty of the music world through visualization";
+    about_paragraph = "We welcome you to join our open-source project on GitHub, whether by submitting issues or contributing code. Donations are also welcome";
+    break;
+}
 ---
 
-<Layout title="About">
+<Layout title={about_title}>
   <Container>
     <Sectionhead>
-      <Fragment slot="title">About</Fragment>
-      <Fragment slot="desc">We are a small passionate team.</Fragment>
+      <Fragment slot="title">{about_title}</Fragment>
+      <Fragment slot="desc">{about_desc}</Fragment>
     </Sectionhead>
 
     <div class="flex flex-col gap-3 mx-auto max-w-4xl mt-16">
       <h2 class="font-bold text-3xl text-gray-800">
-        Empowering the world with Astro.
+        {about_heading}
       </h2>
       <p class="text-lg leading-relaxed text-slate-500">
-        We're a multi-cultural team from around the world! We come from diverse
-        backgrounds, bringing different personalities, experiences and skills to
-        the job. This is what makes our team so special.
+        {about_paragraph}
       </p>
     </div>
     <div class="grid md:grid-cols-3 gap-10 mx-auto max-w-4xl mt-12">

@@ -1,14 +1,47 @@
 ---
 import Container from "@components/container.astro";
 import Layout from "@layouts/Layout.astro";
+import { getLocale } from "astro-i18n-aut";
+
+
+const locale = getLocale(Astro.url);
+
+let title: string;
+let description: string;
+switch (locale) {
+  case "zh":
+    title = "404 Not Found";
+    description = "啊哦，页面未找到。";
+    break;
+  case "ja":
+    title = "404 Not Found";
+    description = "ああ、ページが見つかりません。";
+    break;
+  case "de":
+    title = "404 Not Found";
+    description = "Oh nein, Seite nicht gefunden.";
+    break;
+  case "ru":
+    title = "404 Not Found";
+    description = "Ой, страница не найдена.";
+    break;
+  case "fr":
+    title = "404 Not Found";
+    description = "Oh non, page non trouvée.";
+    break;
+  default:
+    title = "404 Not Found";
+    description = "Oh no, page not found.";
+}
+
 ---
 
 <Layout title="404 Not Found">
   <Container>
     <div class="min-h-[calc(100vh-16rem)] flex items-center justify-center">
       <div class="mt-16 text-center">
-        <h1 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">404</h1>
-        <p class="text-lg mt-4 text-slate-600">Page not found.</p>
+        <h1 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">{title}</h1>
+        <p class="text-lg mt-4 text-slate-600">{description}</p>
       </div>
     </div>
   </Container>

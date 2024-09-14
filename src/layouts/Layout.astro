@@ -4,6 +4,30 @@ import Footer from "@components/footer.astro";
 import Navbar from "@components/navbar/navbar.astro";
 import "@fontsource-variable/inter/index.css";
 import '@fontsource-variable/bricolage-grotesque';
+import { getLocale } from "astro-i18n-aut";
+
+
+const locale = getLocale(Astro.url);
+let translate_title: string;
+switch (locale) {
+  case "zh":
+    translate_title = "音乐可视化";
+    break;
+  case "ja":
+    translate_title = "音楽可視化";
+    break;
+  case "de":
+    translate_title = "Musikvisualisierung";
+    break;
+  case "fr":
+    translate_title = "Visualisations musicales";
+    break;
+  case "ru":
+    translate_title = "Музыкальные визуализации";
+    break;
+  default:
+    translate_title = "Music Visualizations";
+}
 
 
 
@@ -21,8 +45,8 @@ const resolvedImageWithDomain = new URL(
 const { title } = Astro.props;
 
 const makeTitle = title
-  ? title + " | " + "Music Visualizations"
-  : "Music Visualizations";
+  ? title + " | " + translate_title
+  : translate_title;
 ---
 
 <!DOCTYPE html>
@@ -36,7 +60,7 @@ const makeTitle = title
     <!-- <link rel="preload" as="image" href={src} alt="Hero" /> -->
     <SEO
       title={makeTitle}
-      description="Astroship is a starter website template for Astro built with TailwindCSS."
+      description="Music Visualizations Project is a collection of open-source interactive music visualizations created."
       canonical={canonicalURL}
       twitter={{
         creator: "@surjithctly",

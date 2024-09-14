@@ -4,69 +4,98 @@ import { Picture } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
 import Sectionhead from "@components/sectionhead.astro";
+import { getLocale } from "astro-i18n-aut";
+
+const locale = getLocale(Astro.url);
 
 // Filter blog entries with 'draft: false' & date before current date
 const publishedBlogEntries = await getCollection("blog", ({ data }) => {
-  return !data.draft && data.publishDate < new Date();
+    return !data.draft && data.publishDate < new Date();
 });
-
 // Sort content entries by publication date
 publishedBlogEntries.sort(function (a, b) {
-  return b.data.publishDate.valueOf() - a.data.publishDate.valueOf();
+    return b.data.publishDate.valueOf() - a.data.publishDate.valueOf();
 });
+
+let title;
+let description;
+let tonnetzTitle;
+let tonnetzDescription;
+
+switch (locale) {
+  case "zh":
+    title = "交互式音乐可视化";
+    description = "我们可视化音乐并从中学习。";
+    tonnetzTitle = "音程网络 Tonnetz";
+    tonnetzDescription = "音程网络是一种用于音乐理论研究的12音阶格子结构的可视化。";
+    break;
+  case "ja":
+    title = "インタラクティブな音楽可視化";
+    description = "音楽を可視化し、そこから学びます。";
+    tonnetzTitle = "トンネッツ";
+    tonnetzDescription = "トンネッツは、音楽理論の研究に使用される12音階の格子構造の可視化です。";
+    break;
+  case "de":
+    title = "Interaktive Musikvisualisierungen";
+    description = "Wir visualisieren Musik und lernen daraus.";
+    tonnetzTitle = "Tonnetz";
+    tonnetzDescription = "Eine Visualisierung des Tonnetz, einer 12-Ton-Gitterstruktur, die in der Musiktheorie verwendet wird.";
+    break;
+  case "fr":
+    title = "Visualisations musicales interactives";
+    description = "Nous visualisons la musique et en tirons des enseignements.";
+    tonnetzTitle = "Tonnetz";
+    tonnetzDescription = "Une visualisation du Tonnetz, une structure en treillis à 12 tons utilisée dans l'étude de la théorie musicale.";
+    break;
+  case "ru":
+    title = "Интерактивные музыкальные визуализации";
+    description = "Мы визуализируем музыку и учимся на этом.";
+    tonnetzTitle = "Тоннец";
+    tonnetzDescription = "Визуализация Тоннеца, 12-тоновой решетчатой структуры, используемой в изучении теории музыки.";
+    break;
+  default:
+    title = "Interactive Music Visualizations";
+    description = "We visualize music and learn from it.";
+    tonnetzTitle = "Tonnetz";
+    tonnetzDescription = "A visualization of the Tonnetz, a 12-tone lattice structure used in the study of music theory.";
+    break;
+}
 ---
 
-<Layout title="Visualizations">
+<Layout title={title}>
   <Container>
     <Sectionhead>
-      <Fragment slot="title">Interactive Music Visualizations</Fragment>
+      <Fragment slot="title">{title}</Fragment>
       <Fragment slot="desc">
-        We visualize music and learn from it.
+        {description}
       </Fragment>
     </Sectionhead>
     <main class="mt-16">
       <ul class="grid gap-16 max-w-4xl mx-auto">
-        {
-          publishedBlogEntries.map((blogPostEntry, index) => (
-            <li>
-              <a href={`/blog/${blogPostEntry.slug}`}>
-                <div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center">
-                  <Picture
-                    src={blogPostEntry.data.image.src}
-                    alt={blogPostEntry.data.image.alt}
-                    sizes="(max-width: 800px) 100vw, 800px"
-                    width={800}
-                    height={600}
-                    loading={index <= 2 ? "eager" : "lazy"}
-                    decoding={index <= 2 ? "sync" : "async"}
-                    class="w-full rounded-md object-cover object-center bg-white"
-                  />
-                  <div>
-                    <span class="text-blue-400 uppercase tracking-wider text-sm font-medium">
-                      {blogPostEntry.data.category}
-                    </span>
-
-                    <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1 ">
-                      {blogPostEntry.data.title}
-                    </h2>
-
-                    <div class="flex gap-2 mt-3">
-                      <span class="text-gray-400">
-                        {blogPostEntry.data.author}
-                      </span>
-                      <span class="text-gray-400">• </span>
-                      <time
-                        class="text-gray-400"
-                        datetime={blogPostEntry.data.publishDate.toISOString()}>
-                        {blogPostEntry.data.publishDate.toDateString()}
-                      </time>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </li>
-          ))
-        }
+        <li class="border border-gray-200 rounded-lg p-4">
+          <a href={`/music-visualizations/${locale}/tonnetz/`}>
+            <div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center">
+              <Picture
+                src="/public/Tonnetz.png"
+                alt="Tonnetz"
+                sizes="(max-width: 800px) 100vw, 800px"
+                width={800}
+                height={600}
+                loading={"eager"}
+                decoding={"async"}
+                class="w-full rounded-md object-cover object-center bg-white"
+              />
+              <div>
+                <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1 ">
+                  {tonnetzTitle}
+                </h2>
+                <p>
+                  {tonnetzDescription}
+                </p>
+              </div>
+            </div>
+          </a>
+        </li>
       </ul>
     </main>
   </Container>

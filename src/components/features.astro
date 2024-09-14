@@ -1,54 +1,245 @@
 ---
 // @ts-ignore
 import { Icon } from "astro-icon/components";
+import { getLocale } from "astro-i18n-aut";
 
-const features = [
-  {
-    title: "Keyboard and Mouse Input",
-    description:
-      "Interact with visualizations using your keyboard and mouse, providing an intuitive and accessible way to create and manipulate music.",
-    icon: "bx:bxs-keyboard",
-  },
-  {
-    title: "MIDI Input Support",
-    description:
-      "Connect your MIDI devices for a more professional and expressive music creation experience, allowing for real-time input and control.",
-    icon: "bx:bxs-piano",
-  },
-  {
-    title: "Recording Capability",
-    description:
-      "Capture your musical creations and visualizations with ease, allowing you to save, share, and revisit your work anytime.",
-    icon: "bx:bxs-camera",
-  },
-  {
-    title: "Real-time Sound Generation",
-    description:
-      "Instantly produce sounds corresponding to your interactions, providing immediate auditory feedback for each musical element you create or manipulate.",
-    icon: "bx:bxs-volume-full",
-  },
-  {
-    title: "MIDI File Playback",
-    description:
-      "Import and play MIDI files, opening up a world of pre-existing compositions to visualize and learn from.",
-    icon: "bx:bxs-music",
-  },
-  {
-    title: "Diverse Music Visualizations",
-    description:
-      "Explore a wide range of visualization styles and techniques, from simple waveforms to complex, interactive 3D representations of your music.",
-    icon: "bx:bxs-select-multiple",
-  },
-];
+const locale = getLocale(Astro.url);
+
+let features;
+let title;
+let description;
+
+switch (locale) {
+  case "zh":
+    features = [
+      {
+        title: "键盘和鼠标输入",
+        description: "使用键盘和鼠标与可视化交互，提供直观且易于使用的方式来创作和操作音乐。",
+        icon: "bx:bxs-keyboard",
+      },
+      {
+        title: "MIDI 输入支持",
+        description: "连接您的 MIDI 设备，获得更专业和富有表现力的音乐创作体验，支持实时输入和控制。",
+        icon: "bx:bxs-piano",
+      },
+      {
+        title: "录制功能",
+        description: "轻松捕捉您的音乐创作和可视化效果，让您随时可以保存、分享和重新访问您的作品。",
+        icon: "bx:bxs-camera",
+      },
+      {
+        title: "实时声音生成",
+        description: "即时产生与您的交互相对应的声音，为您创建或操作的每个音乐元素提供即时的听觉反馈。",
+        icon: "bx:bxs-volume-full",
+      },
+      {
+        title: "MIDI 文件播放",
+        description: "导入和播放 MIDI 文件，打开一个可视化和学习现有作品的世界。",
+        icon: "bx:bxs-music",
+      },
+      {
+        title: "多样化的音乐可视化",
+        description: "探索广泛的可视化风格和技术，从简单的波形到复杂的、交互式的 3D 音乐表现。",
+        icon: "bx:bxs-select-multiple",
+      },
+    ];
+    title = "使用音乐可视化所需的一切";
+    description = "音乐可视化包含所有必要功能。它采用了最先进工具的精华部分，并加入了自己的创新。";
+    break;
+  case "ja":
+    features = [
+      {
+        title: "キーボードとマウス入力",
+        description: "キーボードとマウスを使用して可視化とインタラクトし、直感的でアクセスしやすい方法で音楽を作成および操作できます。",
+        icon: "bx:bxs-keyboard",
+      },
+      {
+        title: "MIDI入力サポート",
+        description: "MIDIデバイスを接続して、よりプロフェッショナルで表現力豊かな音楽制作体験を。リアルタイムの入力と制御が可能です。",
+        icon: "bx:bxs-piano",
+      },
+      {
+        title: "録音機能",
+        description: "音楽作品と可視化を簡単に捕捉し、いつでも保存、共有、再訪問することができます。",
+        icon: "bx:bxs-camera",
+      },
+      {
+        title: "リアルタイム音声生成",
+        description: "インタラクションに対応する音をすぐに生成し、作成または操作する各音楽要素に即座に聴覚フィードバックを提供します。",
+        icon: "bx:bxs-volume-full",
+      },
+      {
+        title: "MIDIファイル再生",
+        description: "MIDIファイルをインポートして再生し、既存の作品を可視化して学ぶ世界を開きます。",
+        icon: "bx:bxs-music",
+      },
+      {
+        title: "多様な音楽可視化",
+        description: "シンプルな波形から複雑なインタラクティブな3D表現まで、幅広い可視化スタイルと技術を探索できます。",
+        icon: "bx:bxs-select-multiple",
+      },
+    ];
+    title = "音楽可視化に必要なすべてのもの";
+    description = "音楽可視化には必要なものがすべて含まれています。最先端ツールの最良の部分を取り入れ、独自の革新を加えています。";
+    break;
+  case "de":
+    features = [
+      {
+        title: "Tastatur- und Mauseingabe",
+        description: "Interagieren Sie mit Visualisierungen mithilfe von Tastatur und Maus und erhalten Sie eine intuitive und zugängliche Möglichkeit, Musik zu erstellen und zu manipulieren.",
+        icon: "bx:bxs-keyboard",
+      },
+      {
+        title: "MIDI-Eingangsunterstützung",
+        description: "Schließen Sie Ihre MIDI-Geräte an, um ein professionelleres und ausdrucksstärkeres Musikerlebnis zu erhalten, das Echtzeit-Eingabe und -Steuerung ermöglicht.",
+        icon: "bx:bxs-piano",
+      },
+      {
+        title: "Aufnahmefähigkeit",
+        description: "Erfassen Sie Ihre musikalischen Kreationen und Visualisierungen mit Leichtigkeit und speichern, teilen und besuchen Sie Ihre Arbeit jederzeit wieder.",
+        icon: "bx:bxs-camera",
+      },
+      {
+        title: "Echtzeit-Klangerzeugung",
+        description: "Erzeugen Sie sofort Klänge, die Ihren Interaktionen entsprechen, und erhalten Sie sofortiges akustisches Feedback für jedes musikalische Element, das Sie erstellen oder manipulieren.",
+        icon: "bx:bxs-volume-full",
+      },
+      {
+        title: "MIDI-Datei-Wiedergabe",
+        description: "Importieren und spielen Sie MIDI-Dateien ab und eröffnen Sie eine Welt voller bestehender Kompositionen zum Visualisieren und Lernen.",
+        icon: "bx:bxs-music",
+      },
+      {
+        title: "Vielfältige Musikvisualisierungen",
+        description: "Erkunden Sie eine breite Palette von Visualisierungsstilen und -techniken, von einfachen Wellenformen bis hin zu komplexen, interaktiven 3D-Darstellungen Ihrer Musik.",
+        icon: "bx:bxs-select-multiple",
+      },
+    ];
+    title = "Alles, was Sie für Musikvisualisierungen benötigen";
+    description = "Musikvisualisierungen sind komplett ausgestattet. Es nimmt die besten Teile modernster Tools und fügt eigene Innovationen hinzu.";
+    break;
+  case "fr":
+    features = [
+      {
+        title: "Entrée clavier et souris",
+        description: "Interagissez avec les visualisations à l'aide de votre clavier et de votre souris, offrant un moyen intuitif et accessible de créer et de manipuler la musique.",
+        icon: "bx:bxs-keyboard",
+      },
+      {
+        title: "Support d'entrée MIDI",
+        description: "Connectez vos appareils MIDI pour une expérience de création musicale plus professionnelle et expressive, permettant une entrée et un contrôle en temps réel.",
+        icon: "bx:bxs-piano",
+      },
+      {
+        title: "Capacité d'enregistrement",
+        description: "Capturez facilement vos créations musicales et visualisations, vous permettant de sauvegarder, partager et revisiter votre travail à tout moment.",
+        icon: "bx:bxs-camera",
+      },
+      {
+        title: "Génération sonore en temps réel",
+        description: "Produisez instantanément des sons correspondant à vos interactions, fournissant un retour auditif immédiat pour chaque élément musical que vous créez ou manipulez.",
+        icon: "bx:bxs-volume-full",
+      },
+      {
+        title: "Lecture de fichiers MIDI",
+        description: "Importez et lisez des fichiers MIDI, ouvrant un monde de compositions préexistantes à visualiser et à apprendre.",
+        icon: "bx:bxs-music",
+      },
+      {
+        title: "Visualisations musicales diverses",
+        description: "Explorez une large gamme de styles et techniques de visualisation, des simples formes d'onde aux représentations 3D complexes et interactives de votre musique.",
+        icon: "bx:bxs-select-multiple",
+      },
+    ];
+    title = "Tout ce dont vous avez besoin pour utiliser les visualisations musicales";
+    description = "Les visualisations musicales sont livrées avec tout le nécessaire. Elles prennent les meilleures parties des outils de pointe et y ajoutent leurs propres innovations.";
+    break;
+  case "ru":
+    features = [
+      {
+        title: "Ввод с клавиатуры и мыши",
+        description: "Взаимодействуйте с визуализациями с помощью клавиатуры и мыши, обеспечивая интуитивно понятный и доступный способ создания и манипулирования музыкой.",
+        icon: "bx:bxs-keyboard",
+      },
+      {
+        title: "Поддержка MIDI-ввода",
+        description: "Подключайте свои MIDI-устройства для более профессионального и выразительного создания музыки, позволяя вводить и управлять в реальном времени.",
+        icon: "bx:bxs-piano",
+      },
+      {
+        title: "Возможность записи",
+        description: "Легко захватывайте свои музыкальные творения и визуализации, позволяя сохранять, делиться и возвращаться к своей работе в любое время.",
+        icon: "bx:bxs-camera",
+      },
+      {
+        title: "Генерация звука в реальном времени",
+        description: "Мгновенно создавайте звуки, соответствующие вашим взаимодействиям, обеспечивая немедленную слуховую обратную связь для каждого музыкального элемента, который вы создаете или которым манипулируете.",
+        icon: "bx:bxs-volume-full",
+      },
+      {
+        title: "Воспроизведение MIDI-файлов",
+        description: "Импортируйте и воспроизводите MIDI-файлы, открывая мир существующих композиций для визуализации и изучения.",
+        icon: "bx:bxs-music",
+      },
+      {
+        title: "Разнообразные музыкальные визуализации",
+        description: "Исследуйте широкий спектр стилей и техник визуализации, от простых волновых форм до сложных, интерактивных 3D-представлений вашей музыки.",
+        icon: "bx:bxs-select-multiple",
+      },
+    ];
+    title = "Все, что нужно для использования музыкальных визуализаций";
+    description = "Музыкальные визуализации поставляются со всем необходимым. Они берут лучшие части современных инструментов и добавляют свои собственные инновации.";
+    break;
+  default:
+    features = [
+      {
+        title: "Keyboard and Mouse Input",
+        description:
+          "Interact with visualizations using your keyboard and mouse, providing an intuitive and accessible way to create and manipulate music.",
+        icon: "bx:bxs-keyboard",
+      },
+      {
+        title: "MIDI Input Support",
+        description:
+          "Connect your MIDI devices for a more professional and expressive music creation experience, allowing for real-time input and control.",
+        icon: "bx:bxs-piano",
+      },
+      {
+        title: "Recording Capability",
+        description:
+          "Capture your musical creations and visualizations with ease, allowing you to save, share, and revisit your work anytime.",
+        icon: "bx:bxs-camera",
+      },
+      {
+        title: "Real-time Sound Generation",
+        description:
+          "Instantly produce sounds corresponding to your interactions, providing immediate auditory feedback for each musical element you create or manipulate.",
+        icon: "bx:bxs-volume-full",
+      },
+      {
+        title: "MIDI File Playback",
+        description:
+          "Import and play MIDI files, opening up a world of pre-existing compositions to visualize and learn from.",
+        icon: "bx:bxs-music",
+      },
+      {
+        title: "Diverse Music Visualizations",
+        description:
+          "Explore a wide range of visualization styles and techniques, from simple waveforms to complex, interactive 3D representations of your music.",
+        icon: "bx:bxs-select-multiple",
+      },
+    ];
+    title = "Everything you need to use music visualizations";
+    description = "Music visualizations come batteries included. It takes the best parts of state-of-the-art tools and adds its own innovations.";
+}
 ---
 
 <div class="mt-16 md:mt-0">
   <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight">
-    Everything you need to use music visualizations
+    {title}
   </h2>
   <p class="text-lg mt-4 text-slate-600">
-    Music visualizations come batteries included. It takes the best parts of state-of-the-art
-    tools and adds its own innovations.
+    {description}
   </p>
 </div>
 
