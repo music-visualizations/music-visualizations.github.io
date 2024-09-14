@@ -1,16 +1,65 @@
 ---
 import Link from "./ui/link.astro";
+import { getLocale } from "astro-i18n-aut";
+
+const locale = getLocale(Astro.url);
+
+let title: string;
+let action_text: string;
+let get_started_text: string;
+let get_started_link: string;
+
+switch (locale) {
+  case "zh":
+    title = "查看可视化";
+    action_text = "使用可视化来学习和探索美好的音乐世界";
+    get_started_text = "点此进入";
+    get_started_link = "/music-visualizations/zh/visualizations/";
+    break;
+  case "ja":
+    title = "可視化を見る";
+    action_text = "可視化を使用して音楽を学び、探索しましょう";
+    get_started_text = "ここをクリック";
+    get_started_link = "/music-visualizations/ja/visualizations/";
+    break;
+  case "de":
+    title = "Visualisierungen ansehen";
+    action_text = "Verwenden Sie Visualisierungen, um Musik zu lernen und zu erkunden";
+    get_started_text = "Hier klicken";
+    get_started_link = "/music-visualizations/de/visualizations/";
+    break;
+  case "fr":
+    title = "Voir les visualisations";
+    action_text = "Utilisez les visualisations pour apprendre et explorer la musique";
+    get_started_text = "Cliquez ici";
+    get_started_link = "/music-visualizations/fr/visualizations/";
+    break;
+  case "ru":
+    title = "Посмотреть визуализации";
+    action_text = "Используйте визуализации для изучения и исследования музыки";
+    get_started_text = "Начать";
+    get_started_link = "/music-visualizations/ru/visualizations/";
+    break;
+  default:
+    title = "See Visualizations";
+    action_text = "Use visualizations to learn and explore music.";
+    get_started_text = "Get Started";
+    get_started_link = "/music-visualizations/visualizations/";
+    break;
+}
+
+
 ---
 
 <div
   class="bg-black p-8 md:px-20 md:py-20 mt-20 mx-auto max-w-5xl rounded-lg flex flex-col items-center text-center">
   <h2 class="text-white text-4xl md:text-6xl tracking-tight">
-    See Visualizations
+    {title}
   </h2>
   <p class="text-slate-400 mt-4 text-lg md:text-xl">
-    Use visualizations to learn and explore music.
+    {action_text}
   </p>
   <div class="flex mt-5">
-    <Link href="/music-visualizations/visualizations" style="inverted">Get Started</Link>
+    <Link href={get_started_link} style="inverted">{get_started_text}</Link>
   </div>
 </div>

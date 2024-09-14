@@ -3,6 +3,49 @@ import Container from "@components/container.astro";
 import Link from "@components/ui/link.astro";
 import Dropdown from "./dropdown.astro";
 import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
+import { getLocale } from "astro-i18n-aut";
+
+
+const locale = getLocale(Astro.url);
+const visualizationsPath = locale === "en" ? "/music-visualizations/visualizations/" : `/music-visualizations/${locale}/visualizations/`;
+const aboutPath = locale === "en" ? "/music-visualizations/about/" : `/music-visualizations/${locale}/about/`;
+const homePath = locale === "en" ? "/music-visualizations/" : `/music-visualizations/${locale}/`;
+let translated_music: string;
+let translated_visualizations: string;
+let translated_about: string;
+
+switch (locale) {
+  case "zh":
+    translated_music = "音乐";
+    translated_visualizations = "可视化";
+    translated_about = "关于";
+    break;
+  case "ja":
+    translated_music = "音楽";
+    translated_visualizations = "視覚化";
+    translated_about = "について";
+    break;
+  case "de":  
+    translated_music = "Musik";
+    translated_visualizations = "Visualisierungen";
+    translated_about = "Über";
+    break;
+  case "fr":
+    translated_music = "Musique";
+    translated_visualizations = "Visualisations";
+    translated_about = "À propos";
+    break;
+  case "ru":
+    translated_music = "Музыка";
+    translated_visualizations = "Визуализации";
+    translated_about = "О нас";
+    break;
+  default:
+    translated_music = "Music";
+    translated_visualizations = "Visualizations";
+    translated_about = "About";
+    break;
+}
 
 const menuitems = [
   {
@@ -16,14 +59,23 @@ const menuitems = [
     ],
   },
   {
-    title: "Visualizations",
-    path: "/music-visualizations/visualizations",
+    title: translated_visualizations,
+    path: visualizationsPath,
     badge: true,
   },
   {
-    title: "About",
-    path: "/music-visualizations/about",
+    title: translated_about,
+    path: aboutPath,
   },
+];
+
+const languages = [
+  { code: "en", name: "English" },
+  { code: "zh", name: "中文" },
+  { code: "ja", name: "日本語" },
+  { code: "de", name: "Deutsch" },
+  { code: "fr", name: "Français" },
+  { code: "ru", name: "Русский" },
 ];
 ---
 
@@ -31,9 +83,9 @@ const menuitems = [
   <header class="flex flex-col lg:flex-row justify-between items-center my-5">
     <Astronav>
       <div class="flex w-full lg:w-auto items-center justify-between">
-        <a href="/music-visualizations" class="text-lg"
-          ><span class="font-bold text-slate-800">Music</span><span
-            class="text-slate-500">Visualizations</span
+        <a href={homePath} class="text-lg"
+          ><span class="font-bold text-slate-800">{translated_music}</span><span
+            class="text-slate-500">{translated_visualizations}</span
           >
         </a>
         <div class="block lg:hidden">
@@ -65,5 +117,16 @@ const menuitems = [
         </ul>
       </MenuItems>
     </Astronav>
+    <div class="mt-4 lg:mt-0">
+      <select
+        class="border border-gray-300 rounded-md p-2"
+        onchange="location = this.value;">
+        {languages.map((lang) => (
+          <option value={`/music-visualizations/${lang.code}/`} selected={locale === lang.code}>
+            {lang.name}
+          </option>
+        ))}
+      </select>
+    </div>
   </header>
 </Container>

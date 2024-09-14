@@ -2,54 +2,104 @@
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
 import { Icon } from "astro-icon/components";
+import { getLocale } from "astro-i18n-aut";
+
+const locale = getLocale(Astro.url);
+
+let title;
+let description;
+let soundSettingsTitle;
+let instrumentsTitle;
+let volumeTitle;
+let durationTitle;
+
+switch (locale) {
+    case "zh":
+        title = "Tonnetz音格";
+        description = "点击节点播放音符并探索音格。点击三角形播放和弦。也可以使用MIDI键盘或电脑键盘（ASDFGHJ为白键，WETYU为黑键）。";
+        soundSettingsTitle = "声音设置";
+        instrumentsTitle = "乐器";
+        volumeTitle = "音量";
+        durationTitle = "音符持续时间（秒）";
+        break;
+    case "jp":
+        title = "Tonnetz音格";
+        description = "ノードをクリックして音符を再生し、音格を探索します。三角形をクリックして和音を再生します。MIDIキーボードやコンピュータのキーボード（ASDFGHJは白鍵、WETYUは黒鍵）を使用することもできます。";
+        soundSettingsTitle = "音声設定";
+        instrumentsTitle = "楽器";
+        volumeTitle = "音量";
+        durationTitle = "音符の持続時間（秒）";
+        break;
+    case "de":
+        title = "Tonnetz";
+        description = "Klicken Sie auf die Knoten, um Noten zu spielen und das Tonnetz zu erkunden. Klicken Sie auf Dreiecke, um Akkorde zu spielen. Sie können auch ein MIDI-Keyboard oder Ihre Computertastatur verwenden (ASDFGHJ für weiße Tasten, WETYU für schwarze Tasten).";
+        soundSettingsTitle = "Toneinstellungen";
+        instrumentsTitle = "Instrumente";
+        volumeTitle = "Lautstärke";
+        durationTitle = "Notendauer (Sekunden)";
+        break;
+    case "fr":
+        title = "Tonnetz";
+        description = "Cliquez sur les nœuds pour jouer des notes et explorer le Tonnetz. Cliquez sur les triangles pour jouer des accords. Vous pouvez également utiliser un clavier MIDI ou votre clavier d'ordinateur (ASDFGHJ pour les touches blanches, WETYU pour les touches noires).";
+        soundSettingsTitle = "Paramètres sonores";
+        instrumentsTitle = "Instruments";
+        volumeTitle = "Volume";
+        durationTitle = "Durée des notes (secondes)";
+        break;
+    case "ru":
+        title = "Тоннец";
+        description = "Нажимайте на узлы, чтобы воспроизвести ноты и исследовать Тоннец. Нажимайте на треугольники, чтобы воспроизвести аккорды. Вы также можете использовать MIDI-клавиатуру или клавиатуру компьютера (ASDFGHJ для белых клавиш, WETYU для черных клавиш).";
+        soundSettingsTitle = "Настройки звука";
+        instrumentsTitle = "Инструменты";
+        volumeTitle = "Громкость";
+        durationTitle = "Длительность нот (секунды)";
+        break;
+    default:
+        title = "Tonnetz";
+        description = "Click on nodes to play notes and explore the Tonnetz. Click on triangles to play chords. You can also use a MIDI keyboard or your computer keyboard (ASDFGHJ for white keys, WETYU for black keys).";
+}
 
 // Update the Tonnetz grid
 const rows = 8;
 const cols = 26; // Doubled from 13 to 26
 const notes = [
-  ["E♭", "B♭", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯"],
-  ["G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D"],
-  ["B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯"],
-  ["D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯"],
-  ["G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D"],
-  ["B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯"],
-  ["D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯"],
-  ["G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D"],
-  ["B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯"],
-  ["D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯", "F", "C", "G", "D", "A", "E", "B", "F♯", "C♯", "G♯", "D♯", "A♯"],
+    ["E\u266D", "B\u266D", "F", "C", "G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F"],
+    ["G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D"],
+    ["B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F"],
+    ["D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F"],
+    ["G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D"],
+    ["B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F"],
+    ["D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F"],
+    ["G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D"],
+    ["B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F"],
+    ["D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F", "F", "C", "G", "D", "A", "E", "B", "F\u266F", "C\u266F", "G\u266F", "D\u266F", "A\u266F"],
 ];
-
 // Increase the size of triangles and nodes
 const triangleSize = 80; // Decreased from 100 to 80
 const nodeRadius = 16; // Decreased from 20 to 16
-
 // Calculate the height of an equilateral triangle
 const triangleHeight = Math.sqrt(3) / 2 * triangleSize;
-
 // Update SVG dimensions and viewBox
 const svgWidth = cols * 1.5 * triangleSize;
 const svgHeight = rows * triangleHeight - 30;
 const horizontalShift = triangleSize * 0.75;
-
 // Calculate the visible area
 const visibleWidth = svgWidth;
 const visibleHeight = svgHeight;
-
 // Calculate the viewBox to show the entire Tonnetz
 // Shift the viewBox to the left
 const viewBoxX = svgWidth * 0.2; // Shift left by 20% of the SVG width
 const viewBoxY = 20;
 const viewBoxWidth = visibleWidth + 40;
 const viewBoxHeight = visibleHeight + 40;
-
 // Define available instruments
 const instruments = ["piano", "guitar", "synth", "violin"];
 ---
 
 <Layout title="Tonnetz">
   <Container class="max-w-full">
-    <h1 class="text-4xl font-bold text-center my-8">Tonnetz</h1>
-    <p class="text-center mb-8">Click on the nodes to play notes and explore the Tonnetz. Click on triangles to play chords. You can also use a MIDI keyboard or your computer keyboard (ASDFGHJ for white keys, WETYU for black keys).</p>
+    <h1 class="text-4xl font-bold text-center my-8">{title}</h1>
+    <p class="text-center mb-8">{description}</p>
     
     <div class="flex justify-center items-start space-x-8">
       <div class="w-2/3 border border-gray-300 rounded-lg overflow-hidden">
@@ -109,9 +159,9 @@ const instruments = ["piano", "guitar", "synth", "violin"];
       </div>
       
       <div class="w-1/4 border border-gray-300 rounded-lg p-4">
-        <h2 class="text-2xl font-bold mb-4">Sound Settings</h2>
+        <h2 class="text-2xl font-bold mb-4">{soundSettingsTitle}</h2>
         <div class="mb-4">
-          <label for="instrument" class="block text-sm font-medium text-gray-700">Instrument</label>
+          <label for="instrument" class="block text-sm font-medium text-gray-700">{instrumentsTitle}</label>
           <select id="instrument" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
             {instruments.map((instrument) => (
               <option value={instrument}>{instrument.charAt(0).toUpperCase() + instrument.slice(1)}</option>
@@ -119,11 +169,11 @@ const instruments = ["piano", "guitar", "synth", "violin"];
           </select>
         </div>
         <div class="mb-4">
-          <label for="volume" class="block text-sm font-medium text-gray-700">Volume</label>
+          <label for="volume" class="block text-sm font-medium text-gray-700">{volumeTitle}</label>
           <input type="range" id="volume" name="volume" min="0" max="1" step="0.1" value="0.5" class="w-full">
         </div>
         <div class="mb-4">
-          <label for="duration" class="block text-sm font-medium text-gray-700">Note Duration (seconds)</label>
+          <label for="duration" class="block text-sm font-medium text-gray-700">{durationTitle}</label>
           <input type="number" id="duration" name="duration" min="0.1" max="2" step="0.1" value="0.5" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
         </div>
       </div>
