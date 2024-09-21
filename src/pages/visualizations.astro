@@ -5,6 +5,7 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
 import Sectionhead from "@components/sectionhead.astro";
 import { getLocale } from "astro-i18n-aut";
+import tonnetz from "../assets/Tonnetz.png";
 
 const locale = getLocale(Astro.url);
 
@@ -76,7 +77,7 @@ switch (locale) {
           <a href={`/music-visualizations/${locale}/tonnetz/`}>
             <div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center">
               <Picture
-                src="/public/Tonnetz.png"
+                src={tonnetz}
                 alt="Tonnetz"
                 sizes="(max-width: 800px) 100vw, 800px"
                 width={800}
