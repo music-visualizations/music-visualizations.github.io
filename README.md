@@ -9,3 +9,7 @@ Demonstrate music theories/scores in visualization
 ### Overview
 
 In the history, many great musicians proposed a lot of music theories. Many of them are in a visulization form. (Tonnetz, fifth circe). This project aims to implement these visualizations with easy-to-use user interface. 
+
+### About
+
+This is a open-source project. Welcome to contribute to this repo.
