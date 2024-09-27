@@ -7,9 +7,9 @@ import { getLocale } from "astro-i18n-aut";
 
 
 const locale = getLocale(Astro.url);
-const visualizationsPath = locale === "en" ? "/music-visualizations/visualizations/" : `/music-visualizations/${locale}/visualizations/`;
-const aboutPath = locale === "en" ? "/music-visualizations/about/" : `/music-visualizations/${locale}/about/`;
-const homePath = locale === "en" ? "/music-visualizations/" : `/music-visualizations/${locale}/`;
+const visualizationsPath = locale === "en" ? "/visualizations/" : `/${locale}/visualizations/`;
+const aboutPath = locale === "en" ? "/about/" : `/${locale}/about/`;
+const homePath = locale === "en" ? "/" : `/${locale}/`;
 let translated_music: string;
 let translated_visualizations: string;
 let translated_about: string;
@@ -122,7 +122,7 @@ const languages = [
         class="border border-gray-300 rounded-md p-2"
         onchange="location = this.value;">
         {languages.map((lang) => (
-          <option value={`/music-visualizations/${lang.code}/`} selected={locale === lang.code}>
+          <option value={`/${lang.code}/`} selected={locale === lang.code}>
             {lang.name}
           </option>
         ))}
